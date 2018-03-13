@@ -3,12 +3,30 @@
     <sa-big-breadcrumbs [items]="['Dashboard', 'Activate User']" icon="home" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></sa-big-breadcrumbs>
   </div>
 
-  <!--
-      The ID "widget-grid" will start to initialize all widgets below
-      You do not need to use widgets if you dont want to. Simply remove
-      the <section></section> and you can use wells or panels instead
-      -->
-  <!-- widget grid -->
-  Activate User
-
+  <div class="row">
+    <div class="col-xs-12">
+      <table class="table">
+        <thead>
+          <tr style="font-size: medium; background: #3a3633; color: silver">
+            <th>User Id</th>
+            <th>Username</th>
+            <th>Email Id</th>
+            <th>Status</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="font-size: 15px" *ngFor="let user of userObject">
+            <td>{{user.userId}}</td>
+            <td>{{user.userName}}</td>
+            <td>{{user.emailId}}</td>
+            <td>{{user.status}}</td>
+            <td>
+              <button class="btn btn-danger" (click)="onClickActivate(user)">{{ user.status === "Active" ? 'Inactive' : 'Active' }}</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
