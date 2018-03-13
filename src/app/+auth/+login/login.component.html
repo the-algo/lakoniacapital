@@ -1,0 +1,101 @@
+<header id="header" class="animated fadeInDown">
+
+  <div id="logo-group">
+    <span id="logo">
+      <img src="assets/img/logo.png" alt="SmartAdmin"> </span>
+  </div>
+
+  <span id="extr-page-header-space">
+    <span class="hidden-mobile hiddex-xs">Need an account?</span>
+    <a routerLink="/auth/register" class="btn btn-danger">Create account</a>
+  </span>
+
+</header>
+<div id="main" role="main" class="animated fadeInDown">
+
+  <div id="content" class="container">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-7 col-lg-8 hidden-xs hidden-sm">
+        <h1 class="txt-color-red login-header-big">Lakonia Capital, LLC</h1>
+
+        <div class="hero">
+          <div class="pull-left login-desc-box-l">
+            <h4 class="paragraph-header" style="text-align:justify">If you are sophisticated, financially qualified and interested in generating significant income and potential
+              profit from low cost oil recovery projects - Lakonia Capital partnerships may be for you.
+              <br>
+              <br> We conveniently provide potential investors information about our company and partnerships over the phone,
+              by email or in person to help you decide if you would like to review a current offering.
+            </h4>
+          </div>
+          <img src="assets/img/SLOGAN-circle.png" class="pull-right display-image" alt="" style="width:210px">
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-5 col-lg-4">
+        <div class="well no-padding">
+          <form class="smart-form client-form">
+            <header>
+              Sign In
+            </header>
+            <fieldset>
+              <section>
+                <label class="label">Username</label>
+                <label class="input">
+                  <i class="icon-append fa fa-user"></i>
+                  <input placeholder="Username" name="username" data-smart-validate-input="" data-required="" data-email="" data-message-required="Please enter your email address"
+                    data-message-email="Please enter a VALID email address">
+                  <b class="tooltip tooltip-top-right">
+                    <i class="fa fa-user txt-color-teal"></i>
+                    Please enter email address/username</b>
+                </label>
+              </section>
+              <section>
+                <label class="label">Password</label>
+                <label class="input">
+                  <i class="icon-append fa fa-lock"></i>
+                  <input placeholder="Password" type="password" name="password" data-smart-validate-input="" data-required="" data-minlength="3" data-maxnlength="20"
+                    data-message="Please enter your email password">
+                  <b class="tooltip tooltip-top-right">
+                    <i class="fa fa-lock txt-color-teal"></i> Enter your password</b>
+                </label>
+
+                <div class="note">
+                  <a routerLink="/auth/forgot-password">Forgot password?</a>
+                </div>
+              </section>
+              <section>
+                <label class="checkbox">
+                  <input type="checkbox" name="remember" checked>
+                  <i></i>Stay signed in</label>
+              </section>
+            </fieldset>
+            <footer>
+              <button (click)="login($event)" class="btn btn-primary">
+                Sign in
+              </button>
+            </footer>
+          </form>
+        </div>
+
+<!--         <h5 class="text-center"> - Or sign in using -</h5>
+        <ul class="list-inline text-center">
+          <li>
+            <a (click)="(null)" class="btn btn-primary btn-circle">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a (click)="(null)" class="btn btn-info btn-circle">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a (click)="(null)" class="btn btn-warning btn-circle">
+              <i class="fa fa-linkedin"></i>
+            </a>
+          </li>
+        </ul>
+         -->
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+<div id="content">
+  <div class="row">
+    <sa-big-breadcrumbs [items]="['Dashboard', 'View User(s)']" icon="home" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></sa-big-breadcrumbs>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12">
+      <table class="table">
+        <thead>
+          <tr style="font-size: medium; background: #3a3633; color: silver">
+            <th>User Id</th>
+            <th>Username</th>
+            <th>Email Id</th>
+            <th>Status</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="font-size: 15px" *ngFor="let user of userObject">
+            <td>{{user.userId}}</td>
+            <td>{{user.userName}}</td>
+            <td>{{user.emailId}}</td>
+            <td>{{user.status}}</td>
+            <td>
+              <button class="btn btn-danger" (click)="onClickDelete(user)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

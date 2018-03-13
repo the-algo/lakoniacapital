@@ -1,0 +1,207 @@
+<div id="content">
+  <div class="row">
+    <sa-big-breadcrumbs [items]="['Dashboard', 'View Map(s)']" icon="home" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></sa-big-breadcrumbs>
+  </div>
+
+  <div *ngIf="selectedMap === undefined">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="row">
+          <div class="col-xs-2">
+            <p style="font-size: medium; font-weight: bold">Select User:</p>
+          </div>
+          <div class="col-xs-3">
+            <select class="form-control" [(ngModel)]="selectedUser" (change)="onUserSelected()">
+              <option *ngFor="let item of users" [ngValue]="item.key">
+                {{ item.value }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br>
+
+    <div class="row">
+      <div class="col-xs-12" *ngIf="!data">
+        <table class="table">
+          <thead>
+            <tr style="font-size: medium; background: #3a3633; color: silver">
+              <th>Map Id</th>
+              <th>Location Name</th>
+              <th>Latitude</th>
+              <th>Longitude</th>
+              <th>Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="font-size: 15px" *ngFor="let item of detailsObject">
+              <td>{{item.mapId}}</td>
+              <td>{{item.locationName}}</td>
+              <td>{{item.latitude}}</td>
+              <td>{{item.longitude}}</td>
+              <td>
+                <button class="btn btn-info" (click)="selectedMap = item">View Details</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="col-xs-12" *ngIf="data">
+        <table class="table">
+          <thead>
+            <tr style="font-size: medium; background: #3a3633; color: silver">
+              <th>Map Id</th>
+              <th>Location Name</th>
+              <th>Latitude</th>
+              <th>Longitude</th>
+              <th>Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="font-size: 15px" *ngFor="let item of selectedUserDetails">
+              <td>{{item.mapId}}</td>
+              <td>{{item.locationName}}</td>
+              <td>{{item.latitude}}</td>
+              <td>{{item.longitude}}</td>
+              <td>
+                <button class="btn btn-info" (click)="selectedMap = item">View Details</button>
+              </td>
+            </tr>
+
+            <tr style="font-size: 15px" *ngIf="selectedUserDetails.length === 0">
+              <td colspan="5" style="text-align:center; font-weight:bold">No Data Found.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="selectedMap !== undefined">
+    <div class="row">
+      <div class="col-xs-12">
+
+        <button type="button" class="btn btn-labeled btn-default" (click)="onBack()">
+          <span class="btn-label">
+            <i class="glyphicon glyphicon-circle-arrow-left"></i>
+          </span>Back
+        </button>
+        <br>
+        <br>
+        <div class="well">
+          <div class="row">
+            <div class="col-xs-12 list-group-item active">
+              <span class="map-header">Map Details</span>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-xs-3">
+              <div class="row">
+                <div class="col-xs-4 header-map">Map Id:</div>
+                <div class="col-xs-5 data-map">{{ selectedMap.mapId }}</div>
+              </div>
+            </div>
+            <div class="col-xs-7">
+              <div class="row">
+                <div class="col-xs-3 header-map">Map Location:</div>
+                <div class="col-xs-9 data-map">{{ selectedMap.locationName }}</div>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="row">
+                <div class="col-xs-1 header-map">Latitude:</div>
+                <div class="col-xs-5 data-map">{{ selectedMap.latitude }}</div>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="row">
+                <div class="col-xs-1 header-map">Longitude:</div>
+                <div class="col-xs-5 data-map">{{ selectedMap.longitude }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="well">
+          <div class="row">
+            <div class="col-xs-12 list-group-item active">
+              <span class="map-header">Subscription Details</span>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-xs-12">
+              <table class="table">
+                <thead>
+                  <tr style="font-size: medium; background: #3a3633; color: silver">
+                    <th>Subscription For</th>
+                    <th>Period</th>
+                    <th>Expiration Date</th>
+                    <th>Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="font-size: 15px" *ngFor="let item of selectedMap.subscription.for; let i = index">
+                    <td>{{ selectedMap.subscription.for[i] }}</td>
+                    <td>{{ selectedMap.subscription.period[i] }}</td>
+                    <td>{{selectedMap.subscription.expirationDate[i]}}</td>
+                    <td>{{selectedMap.subscription.amount[i]}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="well">
+          <div class="row">
+            <div class="col-xs-12 list-group-item active">
+              <span class="map-header">Payment Details</span>
+            </div>
+          </div>
+
+          <br>
+
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="row">
+                <div class="col-xs-2 header-map">Payment Mode:</div>
+                <div class="col-xs-5 data-map">{{ selectedMap.payment.mode }}</div>
+              </div>
+
+              <br>
+              <div class="row">
+                <div class="col-xs-2 header-map">Payment Date:</div>
+                <div class="col-xs-5 data-map">{{ selectedMap.payment.dateOfPayment }}</div>
+              </div>
+
+              <br>
+
+              <div class="row">
+                <div class="col-xs-2 header-map">Card No:</div>
+                <div class="col-xs-5 data-map">{{ selectedMap.payment.debitCardNo }}</div>
+              </div>
+
+              <br>
+
+              <div class="row">
+                <div class="col-xs-2 header-map">Paid Amount:</div>
+                <div class="col-xs-5 data-map">{{ selectedMap.payment.totalAmount }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
