@@ -23,8 +23,16 @@ export const routes: Routes = [
     loadChildren: './+activate-user/activate-user.module#ActivateUserModule',
   },
   {
-    path: 'view-reports',
-    loadChildren: './+view-reports/view-reports.module#ViewReportsModule',
+    path: 'user-subscription-report',
+    loadChildren: './+user-subscription-report/user-subscription-report.module#ViewUserSubscriptionReportModule',
+  },
+  {
+    path: 'daily-subscription-report',
+    loadChildren: './+daily-subscription-report/daily-subscription-report.module#ViewDailySubscriptionReportModule',
+  },
+  {
+    path: 'search-report',
+    loadChildren: './+search-report/search-report.module#ViewSearchReportModule',
   },
   {
     path: 'renew-details',

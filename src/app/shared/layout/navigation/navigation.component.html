@@ -34,10 +34,29 @@
       </li>
 
       <li>
-        <a title="Report" routerLink="/dashboard/view-reports">
-          <i class="fa fa-lg fa-fw fa-bar-chart-o"></i>
+        <a href="#">
+          <i class="fa fa-area-chart"></i>
           <span class="menu-item-parent">{{'Report' | i18n}}</span>
         </a>
+        <ul>
+          <li routerLinkActive="active">
+            <a routerLink="/dashboard/user-subscription-report">
+              <i class="fa fa-pie-chart"></i>
+              {{'User Subscription' | i18n}}</a>
+          </li>
+          <li routerLinkActive="active">
+            <a routerLink="/dashboard/daily-subscription-report">
+              <i class="fa fa-lg fa-fw fa-bar-chart-o"></i>
+              {{'Daily Subscription' | i18n}}
+            </a>
+          </li>
+          <li routerLinkActive="active">
+            <a routerLink="/dashboard/search-report">
+              <i class="fa fa-lg fa-fw fa-search"></i>
+              {{'Search Period' | i18n}}
+            </a>
+          </li>
+        </ul>
       </li>
 
       <li>
