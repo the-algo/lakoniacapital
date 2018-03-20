@@ -155,7 +155,7 @@
                     <td>{{ selectedMap.subscription.for[i] }}</td>
                     <td>{{ selectedMap.subscription.period[i] }}</td>
                     <td>{{selectedMap.subscription.expirationDate[i]}}</td>
-                    <td>{{selectedMap.subscription.amount[i]}}</td>
+                    <td style="text-align:right; width: 75px">{{selectedMap.subscription.amount[i] | currency:'USD' : true : '1.2-2'}}</td>
                   </tr>
                 </tbody>
               </table>
@@ -175,7 +175,7 @@
           <div class="row">
             <div class="col-xs-12">
               <div class="row">
-                <div class="col-xs-2 header-map">Payment Mode:</div>
+                <div class="col-xs-2 header-map">Payment From:</div>
                 <div class="col-xs-5 data-map">{{ selectedMap.payment.mode }}</div>
               </div>
 
@@ -196,7 +196,7 @@
 
               <div class="row">
                 <div class="col-xs-2 header-map">Paid Amount:</div>
-                <div class="col-xs-5 data-map">{{ selectedMap.payment.totalAmount }}</div>
+                <div class="col-xs-5 data-map">{{ selectedMap.payment.totalAmount | currency:'USD' : true : '1.2-2' }}</div>
               </div>
             </div>
           </div>

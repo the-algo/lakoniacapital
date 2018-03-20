@@ -14,14 +14,15 @@ export class LoginComponent implements OnInit {
   }
 
   login(event) {
-    var data = {
-      userName: "adtech",
-      password: "adtech123"
-    }
+    /*     var data = {
+          userName: "adtech",
+          password: "adtech123"
+        } */
 
     // event.preventDefault();
-    this.jsonApiService.fetch("login/").subscribe();
-    this.router.navigate(['/dashboard/+analytics'])
+    //this.jsonApiService.fetch("login/").subscribe();
+    event.preventDefault();
+    this.router.navigate(['/dashboard'])
   }
 
 }

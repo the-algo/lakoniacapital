@@ -22,7 +22,7 @@
             <td>{{user.emailId}}</td>
             <td>{{user.status}}</td>
             <td>
-              <button class="btn btn-danger" (click)="onClickActivate(user)">{{ user.status === "Active" ? 'Inactive' : 'Active' }}</button>
+              <button class="btn btn-{{ user.status === 'Active' ? 'danger' : 'success' }}" (click)="onClickActivate(user)">{{ user.status === "Active" ? 'Inactive' : 'Active' }}</button>
             </td>
           </tr>
         </tbody>

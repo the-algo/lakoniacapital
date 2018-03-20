@@ -41,7 +41,24 @@ export const routes: Routes = [
   {
     path: 'change-password',
     loadChildren: './+change-password/change-password.module#ChangePasswordModule',
-  }
+  },
+  {
+    path: 'create-map',
+    loadChildren: './+create-map/create-map.module#CreateMapModule',
+  },
+  {
+    path: 'renew-map/:id',
+    loadChildren: './+renew-selected-map/renew-selected-map.module#RenewSelectedMapModule',
+  },
+  {
+    path: 'renew-map',
+    loadChildren: './+renew-map/renew-map.module#RenewMapModule',
+  },
+  {
+    path: 'update-details',
+    loadChildren: './+edit-profile/edit-profile.module#EditProfileModule',
+  },
+
 
   /*   {
       path: 'analytics',

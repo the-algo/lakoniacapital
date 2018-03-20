@@ -185,10 +185,31 @@ export const config: any = {
   voice_commands: <any>{
 
     'show dashboard': {
-      type: 'navigate', payload: ['/dashboard/+analytics']
+      type: 'navigate', payload: ['/dashboard/home']
     },
-    'show +social': {
-      type: 'navigate', payload: ['/dashboard/+social']
+    'show view-users': {
+      type: 'navigate', payload: ['/dashboard/view-users']
+    },
+    'show view-maps': {
+      type: 'navigate', payload: ['/dashboard/view-maps']
+    },
+    'show activate-user': {
+      type: 'navigate', payload: ['/dashboard/activate-user']
+    },
+    'show user-subscription-report': {
+      type: 'navigate', payload: ['/dashboard/user-subscription-report']
+    },
+    'show daily-subscription-report': {
+      type: 'navigate', payload: ['/dashboard/daily-subscription-report']
+    },
+    'show search-report': {
+      type: 'navigate', payload: ['/dashboard/search-report']
+    },
+    'show renew-details': {
+      type: 'navigate', payload: ['/dashboard/renew-details']
+    },
+    'show change-password': {
+      type: 'navigate', payload: ['/dashboard/change-password']
     },
     'show outlook': {
       type: 'navigate', payload: ['/outlook']
@@ -287,10 +308,10 @@ export const config: any = {
       history.back();
     },
     'scroll up': (): any => {
-      jQuery('html, body').animate({scrollTop: 0}, 100);
+      jQuery('html, body').animate({ scrollTop: 0 }, 100);
     },
     'scroll down': (): any => {
-      jQuery('html, body').animate({scrollTop: jQuery(document).height()}, 100);
+      jQuery('html, body').animate({ scrollTop: jQuery(document).height() }, 100);
     },
     'hide navigation': {
       type: 'layout',

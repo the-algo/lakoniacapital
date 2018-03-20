@@ -1,7 +1,15 @@
-<div class="login-info">
-  <span *ngIf="user?.picture"><a (click)="toggleShortcut()">
-	   <img [src]="user.picture" alt="me"
-          class="online"/><span>{{user.username }}</span> <i class="fa fa-angle-down"></i>
+<!-- <div class="login-info">
+  <span *ngIf="user?.picture">
+    <a (click)="toggleShortcut()">
+      <img [src]="user.picture" alt="me" class="online" />
+      <span>{{user.username }}</span>
+      <i class="fa fa-angle-down"></i>
     </a>
-   </span>
+  </span>
+</div> -->
+<div class="login-info">
+  <img src="assets/img/avatars/male.png" alt="me" class="online" />
+  <span style="font-size:16px">
+    Admin/ User
+  </span>
 </div>

@@ -3,12 +3,14 @@ import { FadeInTop } from "../../shared/animations/fade-in-top.decorator";
 
 @FadeInTop()
 @Component({
-  selector: 'app-change-password',
-  templateUrl: './change-password.component.html',
+  selector: 'app-edit-profile',
+  templateUrl: './edit-profile.component.html',
 })
-export class ChangePasswordComponent implements OnInit {
+export class EditProfileComponent implements OnInit {
 
-  passwordDetails = {
+  profileDetails = {
+    userName: null,
+    email: null,
     currentPassword: null,
     newPassword: null,
     confirmPassword: null
@@ -19,8 +21,8 @@ export class ChangePasswordComponent implements OnInit {
   ngOnInit() {
   }
 
-  changePassword() {
-    console.log(this.passwordDetails);
+  updateDetails() {
+    console.log(this.profileDetails);
   }
 
 }

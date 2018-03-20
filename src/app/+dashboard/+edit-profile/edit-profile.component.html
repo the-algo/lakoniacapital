@@ -1,6 +1,6 @@
 <div id="content">
   <div class="row">
-    <sa-big-breadcrumbs [items]="['Dashboard', 'Change Password']" icon="home" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></sa-big-breadcrumbs>
+    <sa-big-breadcrumbs [items]="['Dashboard', 'Edit Profile']" icon="home" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></sa-big-breadcrumbs>
   </div>
 
   <!--
@@ -15,15 +15,31 @@
 
       <form id="smart-form-register" class="smart-form client-form">
         <header>
-          Change Password
+          Update Profile Details
         </header>
 
         <fieldset>
           <section>
+            <label class="label">Username</label>
+            <label class="input">
+              <i class="icon-append fa fa-user"></i>
+              <input type="text" name="userName" [(ngModel)]="profileDetails.userName" placeholder="Username" id="userName">
+            </label>
+          </section>
+
+          <section>
+            <label class="label">Email</label>
+            <label class="input">
+              <i class="icon-append fa fa-envelope"></i>
+              <input type="text" name="email" [(ngModel)]="profileDetails.email" placeholder="Email address" id="email">
+            </label>
+          </section>
+
+          <section>
             <label class="label">Current Password</label>
             <label class="input">
               <i class="icon-append fa fa-lock"></i>
-              <input type="password" name="currentPassword" [(ngModel)]="passwordDetails.currentPassword" placeholder="Current Password"
+              <input type="password" name="currentPassword" [(ngModel)]="profileDetails.currentPassword" placeholder="Current Password"
                 id="currentPassword">
             </label>
           </section>
@@ -32,7 +48,7 @@
             <label class="label">New Password</label>
             <label class="input">
               <i class="icon-append fa fa-lock"></i>
-              <input type="password" name="password" [(ngModel)]="passwordDetails.newPassword" placeholder="New Password" id="password">
+              <input type="password" name="password" [(ngModel)]="profileDetails.newPassword" placeholder="New Password" id="password">
               <b class="tooltip tooltip-bottom-right">Don't forget your password</b>
             </label>
           </section>
@@ -41,14 +57,14 @@
             <label class="label">Confirm New Password</label>
             <label class="input">
               <i class="icon-append fa fa-lock"></i>
-              <input type="password" name="passwordConfirm" [(ngModel)]="passwordDetails.confirmPassword" placeholder="Confirm New Password">
+              <input type="password" name="passwordConfirm" [(ngModel)]="profileDetails.confirmPassword" placeholder="Confirm New Password">
               <b class="tooltip tooltip-bottom-right">Don't forget your password</b>
             </label>
           </section>
         </fieldset>
 
         <footer>
-          <button (click)="changePassword()" class="btn btn-primary">
+          <button (click)="updateDetails()" class="btn btn-primary">
             Change
           </button>
         </footer>

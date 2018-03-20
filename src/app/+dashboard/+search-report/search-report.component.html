@@ -9,22 +9,33 @@
       the <section></section> and you can use wells or panels instead
       -->
   <!-- widget grid -->
+
   <div class="row">
-    <div class="col-xs-1" style="padding-top: 7px; text-align: right; font-size: medium">
+    <div class="col-xs-1" style="padding-top: 5px; text-align: right; font-size: medium">
       <b>From:</b>
     </div>
     <div class="col-xs-2">
-      <my-date-picker name="mydate1" [options]="myDatePickerOptions" [(ngModel)]="model1"></my-date-picker>
+      <div class="input-group">
+        <input type="text" class="form-control" name="request" placeholder="From Date" saUiDatepicker date-format="dd/mm/yy">
+        <div class="input-group-addon">
+          <i class="icon-append fa fa-calendar"></i>
+        </div>
+      </div>
     </div>
 
-    <div class="col-xs-1" style="padding-top: 7px; text-align: right; font-size: medium">
+    <div class="col-xs-1" style="padding-top: 5px; text-align: right; font-size: medium">
       <b>To:</b>
     </div>
     <div class="col-xs-2">
-      <my-date-picker name="mydate2" [options]="myDatePickerOptions" [(ngModel)]="model2"></my-date-picker>
+      <div class="input-group">
+        <input type="text" class="form-control" name="request" placeholder="To Date" saUiDatepicker date-format="dd/mm/yy">
+        <div class="input-group-addon">
+          <i class="icon-append fa fa-calendar"></i>
+        </div>
+      </div>
     </div>
 
-    <div class="col-xs-1" style="padding-top: 2px">
+    <div class="col-xs-1">
       <button class="btn btn-info" (click)="onClickFilter()">Search</button>
     </div>
   </div>

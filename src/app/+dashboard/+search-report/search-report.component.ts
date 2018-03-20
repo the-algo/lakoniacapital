@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FadeInTop } from "../../shared/animations/fade-in-top.decorator";
-import { IMyDpOptions } from 'mydatepicker';
+/* import { IMyDpOptions } from 'mydatepicker'; */
 import Chart from 'chart.js';
 
 @FadeInTop()
@@ -10,9 +10,9 @@ import Chart from 'chart.js';
 })
 export class ViewSearchReportComponent implements OnInit {
 
-  public myDatePickerOptions: IMyDpOptions = {
+/*   public myDatePickerOptions: IMyDpOptions = {
     dateFormat: 'dd-mm-yyyy',
-  };
+  }; */
   public model1: any;
   public model2: any;
 

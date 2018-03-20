@@ -23,7 +23,7 @@ export class ActivateUserComponent implements OnInit {
   }
 
   onClickActivate(user: UserModel) {
-    if (confirm("Are you sure, you want to " + user.status + " " + user.userName)) {
+    if (confirm("Are you sure, you want to " + (user.status === "Active" ? "Inactive" : "Active") + " " + user.userName)) {
       var id = this.userObject.indexOf(user);
       if (this.userObject[id].status === "Inactive")
         this.userObject[id].status = "Active";

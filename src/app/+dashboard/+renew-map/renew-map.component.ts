@@ -1,27 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { FadeInTop } from "../../shared/animations/fade-in-top.decorator";
+import { Router } from '@angular/router';
 
 @FadeInTop()
 @Component({
-  selector: 'app-renew-details',
-  templateUrl: './renew-details.component.html',
+  selector: 'app-renew-map',
+  templateUrl: './renew-map.component.html',
 })
-export class RenewDetailsComponent implements OnInit {
+export class RenewMapComponent implements OnInit {
 
   detailsObject: MapDetailsModel[] = [];
   selectedUserDetails: MapDetailsModel[] = [];
   selectedMap: MapDetailsModel;
   selectedUser: number;
   data: boolean = false;
-  users: any = [
-    { key: 1, value: 'User1' },
-    { key: 2, value: 'User2' },
-    { key: 3, value: 'User3' }
-  ];
 
   todayDate: string;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
     var obj = [
@@ -68,10 +64,10 @@ export class RenewDetailsComponent implements OnInit {
       },
 
       {
-        userId: 2,
-        userName: "User2",
+        userId: 1,
+        userName: "User1",
         mapId: 3,
-        locationName: "Midland",
+        locationName: "Karnes",
         latitude: 35.1122334,
         longitude: 100.9512345,
         subscription: {
@@ -90,6 +86,10 @@ export class RenewDetailsComponent implements OnInit {
     ]
 
     this.detailsObject = obj;
+  }
+
+  onClickRenew(id: number) {
+    this.router.navigate(['/dashboard/renew-map', id])
   }
 
 }

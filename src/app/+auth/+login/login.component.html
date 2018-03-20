@@ -52,8 +52,8 @@
                 <label class="label">Password</label>
                 <label class="input">
                   <i class="icon-append fa fa-lock"></i>
-                  <input placeholder="Password" type="password" name="password" data-smart-validate-input="" data-required="" data-minlength="3" data-maxnlength="20"
-                    data-message="Please enter your email password">
+                  <input placeholder="Password" type="password" name="password" data-smart-validate-input="" data-required="" data-minlength="3"
+                    data-maxnlength="20" data-message="Please enter your email password">
                   <b class="tooltip tooltip-top-right">
                     <i class="fa fa-lock txt-color-teal"></i> Enter your password</b>
                 </label>
@@ -69,14 +69,14 @@
               </section>
             </fieldset>
             <footer>
-              <button (click)="login($event)" class="btn btn-primary">
+              <button class="btn btn-primary" (click)="login($event)">
                 Sign in
               </button>
             </footer>
           </form>
         </div>
 
-<!--         <h5 class="text-center"> - Or sign in using -</h5>
+        <!--         <h5 class="text-center"> - Or sign in using -</h5>
         <ul class="list-inline text-center">
           <li>
             <a (click)="(null)" class="btn btn-primary btn-circle">
