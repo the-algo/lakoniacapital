@@ -13,7 +13,7 @@
   <div class="col-xs-12 col-sm-12 col-md-6 col-lg-5">
     <div class="well no-padding">
 
-      <form id="smart-form-register" class="smart-form client-form">
+      <form [formGroup]="profileForm" class="smart-form client-form">
         <header>
           Update Profile Details
         </header>
@@ -23,7 +23,10 @@
             <label class="label">Username</label>
             <label class="input">
               <i class="icon-append fa fa-user"></i>
-              <input type="text" name="userName" [(ngModel)]="profileDetails.userName" placeholder="Username" id="userName">
+              <input type="text" name="userName" [(ngModel)]="profileDetails.userName" required placeholder="eg. John Doe" [formControl]="profileForm.controls['userName']"
+                (keypress)="lettersOnly($event)">
+              <b class="tooltip tooltip-bottom-right">Username must not contain number or special character</b>
+              <span style="color:red" *ngIf="!profileForm.controls['userName'].valid && profileForm.controls['userName'].touched">Please enter valid Username.</span>
             </label>
           </section>
 
@@ -31,7 +34,9 @@
             <label class="label">Email</label>
             <label class="input">
               <i class="icon-append fa fa-envelope"></i>
-              <input type="text" name="email" [(ngModel)]="profileDetails.email" placeholder="Email address" id="email">
+              <input type="text" name="email" [(ngModel)]="profileDetails.email" required placeholder="eg. johndoe@gmail.com" [formControl]="profileForm.controls['email']">
+              <b class="tooltip tooltip-bottom-right">Email must be in format eg. johndoe@gmail.com</b>
+              <span style="color:red" *ngIf="!profileForm.controls['email'].valid && profileForm.controls['email'].touched">Please enter valid Email.</span>
             </label>
           </section>
 
@@ -40,7 +45,9 @@
             <label class="input">
               <i class="icon-append fa fa-lock"></i>
               <input type="password" name="currentPassword" [(ngModel)]="profileDetails.currentPassword" placeholder="Current Password"
-                id="currentPassword">
+                [formControl]="profileForm.controls['currentPassword']">
+              <b class="tooltip tooltip-bottom-right">Password must contain atleast 1 Uppercase, 1 Lowercase, 1 Numeric and 1 Special Character</b>
+              <span style="color:red" *ngIf="!profileForm.controls['currentPassword'].valid && profileForm.controls['currentPassword'].touched">Please enter valid Current Password.</span>
             </label>
           </section>
 
@@ -48,8 +55,9 @@
             <label class="label">New Password</label>
             <label class="input">
               <i class="icon-append fa fa-lock"></i>
-              <input type="password" name="password" [(ngModel)]="profileDetails.newPassword" placeholder="New Password" id="password">
-              <b class="tooltip tooltip-bottom-right">Don't forget your password</b>
+              <input type="password" name="password" [(ngModel)]="profileDetails.newPassword" placeholder="New Password" [formControl]="profileForm.controls['newPassword']">
+              <b class="tooltip tooltip-bottom-right">Password must contain atleast 1 Uppercase, 1 Lowercase, 1 Numeric and 1 Special Character</b>
+              <span style="color:red" *ngIf="!profileForm.controls['newPassword'].valid && profileForm.controls['newPassword'].touched">Please enter valid New Password.</span>
             </label>
           </section>
 
@@ -57,14 +65,17 @@
             <label class="label">Confirm New Password</label>
             <label class="input">
               <i class="icon-append fa fa-lock"></i>
-              <input type="password" name="passwordConfirm" [(ngModel)]="profileDetails.confirmPassword" placeholder="Confirm New Password">
-              <b class="tooltip tooltip-bottom-right">Don't forget your password</b>
+              <input type="password" name="passwordConfirm" [(ngModel)]="profileDetails.confirmPassword" placeholder="Confirm New Password"
+                [formControl]="profileForm.controls['confirmPassword']">
+              <b class="tooltip tooltip-bottom-right">Password must contain atleast 1 Uppercase, 1 Lowercase, 1 Numeric and 1 Special Character</b>
+              <span style="color:red" *ngIf="!profileForm.controls['confirmPassword'].valid && profileForm.controls['confirmPassword'].touched">Please enter valid Confirm Password.</span>
+              <span *ngIf="err" style="color:red">Password did not matched! </span>
             </label>
           </section>
         </fieldset>
 
         <footer>
-          <button (click)="updateDetails()" class="btn btn-primary">
+          <button [disabled]="!profileForm.valid" (click)="updateDetails()" class="btn btn-primary">
             Change
           </button>
         </footer>

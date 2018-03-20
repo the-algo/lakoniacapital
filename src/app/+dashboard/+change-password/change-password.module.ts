@@ -6,6 +6,7 @@ import { SmartadminLayoutModule } from "../../shared/layout/layout.module";
 import { StatsModule } from "../../shared/stats/stats.module";
 import { SmartadminWidgetsModule } from "../../shared/widgets/smartadmin-widgets.module";
 import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { FormsModule } from '@angular/forms';
     SmartadminLayoutModule,
     StatsModule,
     SmartadminWidgetsModule,
+    ReactiveFormsModule
   ],
   declarations: [ChangePasswordComponent]
 })

@@ -32,7 +32,7 @@
       </div>
       <div class="col-xs-12 col-sm-12 col-md-5 col-lg-4">
         <div class="well no-padding">
-          <form class="smart-form client-form">
+          <form [formGroup]="loginForm" class="smart-form client-form">
             <header>
               Sign In
             </header>
@@ -41,35 +41,33 @@
                 <label class="label">Username</label>
                 <label class="input">
                   <i class="icon-append fa fa-user"></i>
-                  <input placeholder="Username" name="username" data-smart-validate-input="" data-required="" data-email="" data-message-required="Please enter your email address"
-                    data-message-email="Please enter a VALID email address">
-                  <b class="tooltip tooltip-top-right">
-                    <i class="fa fa-user txt-color-teal"></i>
-                    Please enter email address/username</b>
+                  <input type="text" name="username" [(ngModel)]="loginDetails.userName" required placeholder="eg. John Doe" [formControl]="loginForm.controls['userName']"
+                    (keypress)="lettersOnly($event)">
+                  <b class="tooltip tooltip-top-right">Please enter email address/username</b>
+                  <span style="color:red" *ngIf="!loginForm.controls['userName'].valid && loginForm.controls['userName'].touched">Please enter valid Username.</span>
                 </label>
               </section>
               <section>
                 <label class="label">Password</label>
                 <label class="input">
                   <i class="icon-append fa fa-lock"></i>
-                  <input placeholder="Password" type="password" name="password" data-smart-validate-input="" data-required="" data-minlength="3"
-                    data-maxnlength="20" data-message="Please enter your email password">
-                  <b class="tooltip tooltip-top-right">
-                    <i class="fa fa-lock txt-color-teal"></i> Enter your password</b>
+                  <input placeholder="Password" type="password" name="password" [(ngModel)]="loginDetails.password" required [formControl]="loginForm.controls['password']">
+                  <b class="tooltip tooltip-top-right">Enter your password</b>
+                  <span style="color:red" *ngIf="!loginForm.controls['password'].valid && loginForm.controls['password'].touched">Please enter valid Password.</span>
                 </label>
 
                 <div class="note">
                   <a routerLink="/auth/forgot-password">Forgot password?</a>
                 </div>
               </section>
-              <section>
+              <!--               <section>
                 <label class="checkbox">
                   <input type="checkbox" name="remember" checked>
                   <i></i>Stay signed in</label>
-              </section>
+              </section> -->
             </fieldset>
             <footer>
-              <button class="btn btn-primary" (click)="login($event)">
+              <button class="btn btn-primary" [disabled]="!loginForm.valid" (click)="login($event)">
                 Sign in
               </button>
             </footer>
