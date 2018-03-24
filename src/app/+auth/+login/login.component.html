@@ -16,18 +16,14 @@
   <div id="content" class="container">
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-7 col-lg-8 hidden-xs hidden-sm">
-        <h1 class="txt-color-red login-header-big">Lakonia Capital, LLC</h1>
+        <h1 class="txt-color-red login-header-big">OilWellStores.com</h1>
 
         <div class="hero">
           <div class="pull-left login-desc-box-l">
-            <h4 class="paragraph-header" style="text-align:justify">If you are sophisticated, financially qualified and interested in generating significant income and potential
-              profit from low cost oil recovery projects - Lakonia Capital partnerships may be for you.
-              <br>
-              <br> We conveniently provide potential investors information about our company and partnerships over the phone,
-              by email or in person to help you decide if you would like to review a current offering.
+            <h4 class="paragraph-header" style="text-align:justify">OilWellStore.com is the first online platform of its kind offering oil and gas drilling partnerships in accordance
+              with SEC Regulation D Rule 506(c)
             </h4>
           </div>
-          <img src="assets/img/SLOGAN-circle.png" class="pull-right display-image" alt="" style="width:210px">
         </div>
       </div>
       <div class="col-xs-12 col-sm-12 col-md-5 col-lg-4">
@@ -38,13 +34,12 @@
             </header>
             <fieldset>
               <section>
-                <label class="label">Username</label>
+                <label class="label">Email</label>
                 <label class="input">
                   <i class="icon-append fa fa-user"></i>
-                  <input type="text" name="username" [(ngModel)]="loginDetails.userName" required placeholder="eg. John Doe" [formControl]="loginForm.controls['userName']"
-                    (keypress)="lettersOnly($event)">
-                  <b class="tooltip tooltip-top-right">Please enter email address/username</b>
-                  <span style="color:red" *ngIf="!loginForm.controls['userName'].valid && loginForm.controls['userName'].touched">Please enter valid Username.</span>
+                  <input type="text" name="username" [(ngModel)]="loginDetails.userName" required placeholder="eg. johndoe@gmail.com" [formControl]="loginForm.controls['userName']">
+                  <b class="tooltip tooltip-top-right">Please enter email address</b>
+                  <span style="color:red" *ngIf="!loginForm.controls['userName'].valid && loginForm.controls['userName'].touched">Please enter valid Email.</span>
                 </label>
               </section>
               <section>
@@ -71,6 +66,15 @@
                 Sign in
               </button>
             </footer>
+
+            <div class="alert alert-block alert-danger" *ngIf="erMsg !== null" dismisser="">
+              <h4 class="alert-heading">
+                <i class="fa fa-times"></i> Login Failed !</h4>
+              <br>
+              <p>
+                {{ erMsg }}
+              </p>
+            </div>
           </form>
         </div>
 

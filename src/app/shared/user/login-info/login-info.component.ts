@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from "../user.service";
-import { LayoutService } from "../../layout/layout.service";
+import { Router } from '@angular/router';
 
 @Component({
 
@@ -9,11 +8,15 @@ import { LayoutService } from "../../layout/layout.service";
 })
 export class LoginInfoComponent implements OnInit {
 
-  user: any;
+  userName: string;
 
-  constructor(
-    private userService: UserService,
-    private layoutService: LayoutService) {
+  constructor(private router: Router) {
+    if (JSON.parse(sessionStorage.getItem("jsakfjaslhsfjkaldshfjkdslfhjsdll"))) {
+      var data = JSON.parse(sessionStorage.getItem("jsakfjaslhsfjkaldshfjkdslfhjsdll"));
+      this.userName = data.userName;
+    } else {
+      this.router.navigate(['/auth/login']);
+    }
   }
 
   ngOnInit() {
@@ -22,8 +25,8 @@ export class LoginInfoComponent implements OnInit {
         }) */
   }
 
-  toggleShortcut() {
-    this.layoutService.onShortcutToggle()
-  }
+  /*   toggleShortcut() {
+      this.layoutService.onShortcutToggle()
+    } */
 
 }

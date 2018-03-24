@@ -10,7 +10,7 @@
     traditional href="" links. See documentation for details.
     -->
 
-    <ul saSmartMenu>
+    <ul saSmartMenu *ngIf="id === 1">
 
       <li>
         <a title="Admin Menu" style="cursor:default">
@@ -82,7 +82,7 @@
 
     <br>
 
-    <ul saSmartMenu>
+    <ul saSmartMenu *ngIf="id === 2">
       <li>
         <a title="User Menu" style="cursor:default">
           <span style="font-size:medium">{{'User Menu' | i18n}}</span>

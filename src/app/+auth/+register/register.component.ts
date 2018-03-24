@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { RestServiceApiService } from '../../service/rest-service-api.service';
 
 @Component({
   selector: 'app-register',
@@ -16,9 +17,11 @@ export class RegisterComponent implements OnInit {
     confirmPassword: null
   };
   err: boolean = false;
+  message: string = null;
+  erMsg: string = null;
 
   registerForm: FormGroup;
-  constructor(fb: FormBuilder, private router: Router) {
+  constructor(fb: FormBuilder, private router: Router, private service: RestServiceApiService) {
     this.registerForm = fb.group({
       'userName': [null, [Validators.required, Validators.pattern('^[a-zA-Z_ ]*$')]],
       'email': [null, [Validators.required, Validators.pattern('^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$')]],
@@ -39,9 +42,36 @@ export class RegisterComponent implements OnInit {
     this.err = false;
     this.registrationDetails.email = this.registrationDetails.email.toLocaleLowerCase();
 
-    console.log(this.registrationDetails);
-    event.preventDefault();
-    this.router.navigate(['/dashboard'])
+    if (this.registrationDetails) {
+      this.service.signUp(this.registrationDetails).subscribe(res => {
+        if (res.error == false) {
+          this.message = res.result;
+        } else {
+          this.erMsg = res.message;
+        }
+
+        if (this.erMsg) {
+          setTimeout(() => {
+            this.erMsg = null;
+            window.location.reload();
+          }, 5000);
+
+          return;
+        }
+
+        if (this.message) {
+          setTimeout(() => {
+            this.message = null;
+            this.router.navigate(['/auth/login'])
+          }, 5000);
+
+          return;
+        }
+      });
+    } else {
+
+    }
+
   }
 
   lettersOnly(event: any) {

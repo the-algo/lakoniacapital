@@ -62,11 +62,11 @@ export class RenewSelectedMapComponent implements OnInit {
     latitude: null,
     longitude: null,
     paymentDetails: {
-      cardType: null,
-      cardNo: null,
-      expirationDate: null,
-      cardHolderName: null,
-      securityCode: null
+      cardType: '0',
+      cardNo: '',
+      expirationDate: '',
+      cardHolderName: '',
+      securityCode: ''
     }
   };
 
@@ -193,6 +193,9 @@ export class RenewSelectedMapComponent implements OnInit {
   selectedMonth: string = '0';
   selectedYear: string = '0';
 
+  minLength: number = 0;
+  maxLength: number = 0;
+
   years = [2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035, 2036, 2037, 2038, 2039, 2040]
 
   public steps = [
@@ -237,14 +240,106 @@ export class RenewSelectedMapComponent implements OnInit {
     if (idx > 0) {
       this.activeStep = this.steps[idx - 1]
     }
+
+    this.nextBtnStatus = true;
   }
 
+  cardStatus: boolean = true;
+  cardNoStatus: boolean = true;
+  expirationDateStatus: boolean = true;
+  cardholderNameStatus: boolean = true;
+  securityCodeStatus: boolean = true;
+  nextBtnStatus: boolean = true;
+
   nextStep() {
-    this.activeStep.submitted = true;
+
+    if (this.activeStep.key === "step1") {
+      if (this.model.subscriptionFor[0].status || this.model.subscriptionFor[1].status || this.model.subscriptionFor[2].status) {
+        this.activeStep.submitted = true;
+        this.activeStep.checked = true;
+        this.activeStep.valid = true;
+      } else {
+        this.activeStep.submitted = false;
+        this.activeStep.checked = false;
+        this.activeStep.valid = false;
+
+        alert("Please select atleast one Subscription Package")
+        return;
+      }
+    } else if (this.activeStep.key === "step2") {
+
+      if (this.steps[0].valid && this.steps[1].valid) {
+        this.activeStep.submitted = true;
+        this.activeStep.checked = true;
+        this.activeStep.valid = true;
+      }
+
+      if (this.status)
+        this.nextBtnStatus = true;
+      else
+        this.nextBtnStatus = false;
+
+    } else if (this.activeStep.key === "step3") {
+      /* 
+            if (this.model.paymentDetails.cardType !== '0') {
+              this.cardStatus = true;
+      
+              if (this.model.paymentDetails.cardNo.length >= this.minLength && this.model.paymentDetails.cardNo.length <= this.minLength && (this.model.paymentDetails.cardNo !== null && this.model.paymentDetails.cardNo !== '')) {
+                this.cardNoStatus = true;
+      
+                if (this.model.paymentDetails.expirationDate !== null && this.model.paymentDetails.expirationDate !== '') {
+                  this.expirationDateStatus = true;
+      
+                  if (this.model.paymentDetails.cardHolderName !== null && this.model.paymentDetails.cardHolderName !== '') {
+                    this.cardholderNameStatus = true;
+      
+                    if (this.model.paymentDetails.securityCode !== null && this.model.paymentDetails.securityCode !== '') {
+                      this.securityCodeStatus = true;
+      
+                      console.log("Valid");
+      
+                    } else {
+                      this.securityCodeStatus = false;
+                      return;
+                    }
+                  } else {
+                    this.cardholderNameStatus = false;
+                    return;
+                  }
+                } else {
+                  this.expirationDateStatus = false;
+                  return;
+                }
+              } else {
+                this.cardNoStatus = false;
+                return;
+              }
+            } else {
+              this.cardStatus = false;
+              return;
+            } */
+
+      this.activeStep.submitted = true;
+      this.activeStep.checked = true;
+      this.activeStep.valid = true;
+
+      console.log(this.model);
+
+      return;
+
+    }
+
+
+
+
+
+
+
+    //this.activeStep.submitted = true;
     //if (!this.activeStep.valid) {
     //  return;
     //}
-    this.activeStep.checked = true;
+    //this.activeStep.checked = true;
     //if (this.steps.every(it => (it.valid && it.checked))) {
     //  this.onWizardComplete(this.model)
     //} else {
@@ -259,10 +354,8 @@ export class RenewSelectedMapComponent implements OnInit {
     }
   }
 
-
   onWizardComplete(data) {
   }
-
 
   private lastModel;
 
@@ -327,8 +420,94 @@ export class RenewSelectedMapComponent implements OnInit {
   }
 
   onClickSave() {
-    this.status = true;
-    console.log(this.model);
+    if (this.model.paymentDetails.cardType !== '0') {
+      this.cardStatus = true;
+    } else {
+      this.cardStatus = false;
+    }
+
+    if (this.model.paymentDetails.cardNo.length >= this.minLength && this.model.paymentDetails.cardNo.length <= this.maxLength && (this.model.paymentDetails.cardNo !== null && this.model.paymentDetails.cardNo !== '')) {
+      this.cardNoStatus = true;
+    } else {
+      this.cardNoStatus = false;
+    }
+
+    if ((this.selectedMonth !== null && this.selectedMonth !== '0') && (this.selectedYear !== null && this.selectedYear !== '0')) {
+      this.expirationDateStatus = true;
+    } else {
+      this.expirationDateStatus = false;
+    }
+
+    if (this.model.paymentDetails.cardHolderName !== null && this.model.paymentDetails.cardHolderName !== '') {
+      this.cardholderNameStatus = true;
+    } else {
+      this.cardholderNameStatus = false;
+    }
+
+    if (this.model.paymentDetails.securityCode.length >= 3 && this.model.paymentDetails.securityCode.length <= 4 && this.model.paymentDetails.securityCode !== null && this.model.paymentDetails.securityCode !== '') {
+      this.securityCodeStatus = true;
+    } else {
+      this.securityCodeStatus = false;
+    }
+
+    if (this.cardStatus && this.cardNoStatus && this.expirationDateStatus && this.cardholderNameStatus && this.securityCodeStatus) {
+      console.log("Valid");
+      this.status = true;
+      for (var i = 0; i < 1; i++) {
+        if (this.steps[i].valid && this.steps[i + 1].valid) {
+          this.nextBtnStatus = true;
+        } else {
+          this.nextBtnStatus = false
+        }
+      }
+      console.log(this.model);
+    }
+
+  }
+
+  lettersOnly(event: any) {
+    const pattern = /[a-zA-Z ]/;
+    //const pattern = /[0-9\+\-\ ]/;
+    let inputChar = String.fromCharCode(event.charCode);
+    if (event.charCode == 0) {
+
+    } else
+      if (!pattern.test(inputChar)) {
+        // invalid character, prevent input
+        event.preventDefault();
+      }
+  }
+
+  numbersOnly(event: any) {
+    const pattern = /[0-9 ]/;
+    //const pattern = /[0-9\+\-\ ]/;
+    let inputChar = String.fromCharCode(event.charCode);
+    if (event.charCode == 0) {
+
+    } else
+      if (!pattern.test(inputChar)) {
+        // invalid character, prevent input
+        event.preventDefault();
+      }
+  }
+
+  onCardSelected() {
+    if (this.model.paymentDetails.cardType === "AmericanExpress") {
+      this.minLength = 15;
+      this.maxLength = 15;
+    } else if (this.model.paymentDetails.cardType === "Mastercard") {
+      this.minLength = 16;
+      this.maxLength = 16;
+    } else if (this.model.paymentDetails.cardType === "Maestrocard") {
+      this.minLength = 16;
+      this.maxLength = 19;
+    } else if (this.model.paymentDetails.cardType === "Visa") {
+      this.minLength = 13;
+      this.maxLength = 19;
+    } else {
+      this.minLength = 0;
+      this.maxLength = 0;
+    }
   }
 
 }

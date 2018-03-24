@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { JsonApiService } from '../../core/api/json-api.service';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { RestServiceApiService } from '../../service/rest-service-api.service';
+import { SessionService } from '../../service/session.service';
 
 @Component({
   selector: 'app-login',
@@ -14,11 +16,13 @@ export class LoginComponent implements OnInit {
     password: null
   };
   err: boolean = false;
+  message: string = null;
+  erMsg: string = null;
 
   loginForm: FormGroup;
-  constructor(fb: FormBuilder, private router: Router) {
+  constructor(fb: FormBuilder, private router: Router, private service: RestServiceApiService, private session: SessionService) {
     this.loginForm = fb.group({
-      'userName': [null, [Validators.required, Validators.pattern('^[a-zA-Z_ ]*$')]],
+      'userName': [null, [Validators.required, Validators.pattern('^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$')]],
       'password': [null, [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')]],
     });
   }
@@ -36,22 +40,37 @@ export class LoginComponent implements OnInit {
 
     // event.preventDefault();
     //this.jsonApiService.fetch("login/").subscribe();
-    console.log(this.loginDetails)
-    event.preventDefault();
-    this.router.navigate(['/dashboard'])
-  }
+    this.loginDetails.userName = this.loginDetails.userName.toLocaleLowerCase();
 
+    if (this.loginDetails) {
+      this.service.signIn(this.loginDetails).subscribe(res => {
+        if (res.error == false) {
+          if (!res.userDetail.userIsActive) {
+            this.erMsg = res.message;
+            return;
+          }
 
-  lettersOnly(event: any) {
-    const pattern = /[a-zA-Z ]/;
-    //const pattern = /[0-9\+\-\ ]/;
-    let inputChar = String.fromCharCode(event.charCode);
-    if (event.charCode == 0) {
+          this.message = res.result;
+          this.session.setSession(res);
+          this.router.navigate(['/dashboard/home']);
 
-    } else
-      if (!pattern.test(inputChar)) {
-        // invalid character, prevent input
-        event.preventDefault();
-      }
+        } else {
+          this.erMsg = res.message;
+        }
+
+        if (this.erMsg) {
+          setTimeout(() => {
+            this.erMsg = null;
+            window.location.reload();
+          }, 5000);
+
+          return;
+        }
+      });
+
+    } else {
+      window.location.reload();
+      event.preventDefault();
+    }
   }
 }
