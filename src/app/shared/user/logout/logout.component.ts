@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { NotificationService } from "../../utils/notification.service";
+import { SessionService } from '../../../service/session.service';
 
 declare var $: any;
 
@@ -18,7 +19,7 @@ declare var $: any;
 export class LogoutComponent implements OnInit {
 
   constructor(private router: Router,
-    private notificationService: NotificationService) { }
+    private notificationService: NotificationService, private session: SessionService) { }
 
   showPopup() {
     this.notificationService.smartMessageBox({
@@ -34,6 +35,7 @@ export class LogoutComponent implements OnInit {
   }
 
   logout() {
+    this.session.clearSession();
     this.router.navigate(['/auth/login'])
   }
 

@@ -16,6 +16,7 @@ export class RestServiceApiService {
   private deleteUser = this.apiLink + "oilwell/admin/api/users/";
   private changePassword = this.apiLink + "oilwell/api/change_password";
   private activeUser = this.apiLink + "oilwell/admin/api/users/change_status";
+  private changeUsername = this.apiLink + "oilwell/api/update_profile";
 
   constructor(@Inject(Http) http: Http, private session: SessionService) {
     this.http = http;
@@ -64,7 +65,6 @@ export class RestServiceApiService {
       return { error: true, message: 'Server Busy' }
     });
   }
-
 
   // Getting Token
   getOptionsWithToken() {
@@ -124,6 +124,16 @@ export class RestServiceApiService {
   // Activate User
   activateUser(id: any): Observable<any> {
     return this.http.post(this.activeUser, id, this.getOptionsWithToken()).map((response) => {
+      return response.json();
+    }, (error) => {
+      return null
+    });
+  }
+
+  // Updating Username
+  updateUsername(details: any): Observable<any> {
+    //return this.genericPOST(this.changePassword, password);
+    return this.http.post(this.changeUsername, details, this.getOptionsWithToken()).map((response) => {
       return response.json();
     }, (error) => {
       return null

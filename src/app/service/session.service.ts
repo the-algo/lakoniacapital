@@ -44,7 +44,7 @@ export class SessionService {
 
   clearSession() {
     sessionStorage.removeItem("jsakfjaslhsfjkaldshfjkdslfhjsdll");
-    sessionStorage.removeItem("Token");
+    sessionStorage.removeItem("TOKEN");
     sessionStorage.clear();
     this._router.navigate(['/auth/login']);
   }

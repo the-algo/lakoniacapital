@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FadeInTop } from "../../shared/animations/fade-in-top.decorator";
 import { Router } from "@angular/router";
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { SessionService } from '../../service/session.service';
+import { RestServiceApiService } from '../../service/rest-service-api.service';
 
 @FadeInTop()
 @Component({
@@ -13,34 +15,62 @@ export class EditProfileComponent implements OnInit {
   profileDetails = {
     userName: null,
     email: null,
-    currentPassword: null,
-    newPassword: null,
-    confirmPassword: null
+    currentPassword: null
   }
 
+
   err: boolean = false;
+  result: any;
+  erMsg: string = null;
+  errStatus: boolean = true;
 
   profileForm: FormGroup;
-  constructor(fb: FormBuilder, private router: Router) {
+  constructor(fb: FormBuilder, private router: Router, private session: SessionService, private service: RestServiceApiService) {
     this.profileForm = fb.group({
       'userName': [null, [Validators.required, Validators.pattern('^[a-zA-Z_ ]*$')]],
       'email': [null, [Validators.required, Validators.pattern('^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$')]],
-      'currentPassword': [null, [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')]],
-      'newPassword': [null, [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')]],
-      'confirmPassword': [null, [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')]]
+      'currentPassword': [null, [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')]]
     });
+
+    var details = JSON.parse(sessionStorage.getItem("jsakfjaslhsfjkaldshfjkdslfhjsdll"));
+
+    if (details) {
+      this.profileDetails.userName = details.userName;
+      this.profileDetails.email = details.userEmail;
+    } else {
+      this.session.clearSession();
+    }
   }
 
   ngOnInit() {
   }
 
   updateDetails() {
-    if (this.profileDetails.newPassword != this.profileDetails.confirmPassword) {
-      this.err = true;
-      return;
-    }
     this.err = false;
-    console.log(this.profileDetails);
+
+    var details = {
+      username: this.profileDetails.userName,
+      password: this.profileDetails.currentPassword
+    }
+
+    this.service.updateUsername(details).subscribe(res => {
+      if (res) {
+        //console.log(res);
+        this.result = res.result;
+        this.errStatus = res.error;
+
+        setTimeout(() => {
+          this.result = null;
+          if (!this.errStatus) {
+            this.errStatus = false;
+            this.session.clearSession();
+            return;
+          }
+          this.errStatus = true;
+
+        }, 2000);
+      }
+    })
   }
 
 
