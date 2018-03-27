@@ -8,21 +8,23 @@
       <table class="table">
         <thead>
           <tr style="font-size: medium; background: #3a3633; color: silver">
-            <th>User Id</th>
-            <th>Username</th>
-            <th>Email Id</th>
-            <th>Status</th>
-            <th>Delete</th>
+            <th style="width: 8%">Sr. No.</th>
+            <th style="width: 21%">Username</th>
+            <th style="width: 30%">Email Id</th>
+            <th style="width: 13%">Email Verified</th>
+            <th style="width: 16%">Verified By Admin</th>
+            <th style="width: 12%">Action</th>
           </tr>
         </thead>
         <tbody>
-          <tr style="font-size: 15px" *ngFor="let user of userObject">
-            <td>{{user.userId}}</td>
+          <tr style="font-size: 15px" *ngFor="let user of userObject; let i = index">
+            <td>{{i + 1}}</td>
             <td>{{user.userName}}</td>
-            <td>{{user.emailId}}</td>
-            <td>{{user.status}}</td>
+            <td>{{user.userEmail}}</td>
+            <td style="text-align:center">{{user.userIsActive ? 'Yes' : 'No'}}</td>
+            <td style="text-align:center">{{user.userIsActiveByAdmin ? 'Yes' : 'No'}}</td>
             <td>
-              <button class="btn btn-{{ user.status === 'Active' ? 'danger' : 'success' }}" (click)="onClickActivate(user)">{{ user.status === "Active" ? 'Inactive' : 'Active' }}</button>
+              <button class="btn btn-{{ user.userIsActiveByAdmin === true ? 'danger' : 'success' }}" (click)="onClickActivate(user)">{{ user.userIsActiveByAdmin === true ? 'Inactive' : 'Active' }}</button>
             </td>
           </tr>
         </tbody>

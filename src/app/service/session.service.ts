@@ -21,8 +21,9 @@ export class SessionService {
 
   }
   setSession(data: any) {
+    //console.log(data);
     sessionStorage.setItem("jsakfjaslhsfjkaldshfjkdslfhjsdll", JSON.stringify(data.userDetail));
-    sessionStorage.setItem("TOKEN", JSON.stringify(data.userDetail))
+    sessionStorage.setItem("TOKEN", data.token);
   }
   getToken() {
     return sessionStorage.getItem("TOKEN");
@@ -43,7 +44,8 @@ export class SessionService {
 
   clearSession() {
     sessionStorage.removeItem("jsakfjaslhsfjkaldshfjkdslfhjsdll");
+    sessionStorage.removeItem("Token");
     sessionStorage.clear();
-    this._router.navigate(['/pages/login']);
+    this._router.navigate(['/auth/login']);
   }
 }

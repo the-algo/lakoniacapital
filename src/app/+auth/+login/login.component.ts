@@ -62,7 +62,7 @@ export class LoginComponent implements OnInit {
           setTimeout(() => {
             this.erMsg = null;
             window.location.reload();
-          }, 5000);
+          }, 2000);
 
           return;
         }

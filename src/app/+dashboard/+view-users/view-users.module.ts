@@ -6,6 +6,7 @@ import { SmartadminLayoutModule } from "../../shared/layout/layout.module";
 import { StatsModule } from "../../shared/stats/stats.module";
 import { SmartadminWidgetsModule } from "../../shared/widgets/smartadmin-widgets.module";
 import { SmartadminDatatableModule } from "../../shared/ui/datatable/smartadmin-datatable.module";
+import { SmartadminModule } from "../../shared/smartadmin.module";
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { SmartadminDatatableModule } from "../../shared/ui/datatable/smartadmin-
     SmartadminLayoutModule,
     StatsModule,
     SmartadminWidgetsModule,
+    SmartadminModule
   ],
   declarations: [ViewUsersComponent]
 })
