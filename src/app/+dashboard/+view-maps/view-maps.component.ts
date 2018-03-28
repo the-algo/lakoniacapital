@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FadeInTop } from "../../shared/animations/fade-in-top.decorator";
+import { RestServiceApiService } from '../../service/rest-service-api.service';
 
 @FadeInTop()
 @Component({
@@ -18,8 +19,17 @@ export class ViewMapsComponent implements OnInit {
     { key: 2, value: 'User2' },
     { key: 3, value: 'User3' }
   ];
+  id: number = null;
 
-  constructor() {
+  constructor(private service: RestServiceApiService) {
+
+    if (JSON.parse(sessionStorage.getItem("jsakfjaslhsfjkaldshfjkdslfhjsdll"))) {
+      var data = JSON.parse(sessionStorage.getItem("jsakfjaslhsfjkaldshfjkdslfhjsdll"));
+      this.id = data.userRoleId;
+      this.service.getMySubscriptions().subscribe(res => {
+        console.log(res)
+      })
+    }
   }
 
   ngOnInit() {

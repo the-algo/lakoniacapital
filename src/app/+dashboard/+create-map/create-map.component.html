@@ -4,6 +4,20 @@
   </div>
 
   <div class="row">
+    <article class="col-sm-12">
+      <alert type="success" dismissible="true" *ngIf="!errStatus && result">
+        <i class="fa-fw fa fa-check"></i>
+        <strong>Success</strong> {{result}}
+      </alert>
+
+      <alert type="danger" dismissible="true" *ngIf="errStatus && result">
+        <i class="fa-fw fa fa-times"></i>
+        <strong>Error!</strong> {{result}}
+      </alert>
+    </article>
+  </div>
+
+  <div class="row">
     <div class="col-xs-10">
       <sa-widget color="darken">
         <!-- widget options:
@@ -78,16 +92,16 @@
                           </section>
                         </div>
                         <div class="col-xs-3">
-                          <select class="form-control" name="period1" [(ngModel)]="model.subscriptionFor[0].period" (change)="changePrice('Map', model.subscriptionFor[0].period)">
+                          <select class="form-control" name="period1" [(ngModel)]="model.subDetail[0].itemPeriod" (change)="changePrice('Map', model.subDetail[0].itemPeriod)">
                             <option value="0" selected></option>
-                            <option value="1 Month">1 Month</option>
-                            <option value="6 Months">6 Months</option>
-                            <option value="1 Year">1 Year</option>
+                            <option value="1">1 Month</option>
+                            <option value="6">6 Months</option>
+                            <option value="12">12 Months</option>
                           </select>
                         </div>
 
                         <div class="col-xs-1" style="text-align:right">
-                          <span style="font-size:15px">{{ model.subscriptionFor[0].amount | currency:'USD' : true : '1.2-2' }}</span>
+                          <span style="font-size:15px">{{ model.subDetail[0].itemAmount | currency:'USD' : true : '1.2-2' }}</span>
                         </div>
                       </div>
 
@@ -98,16 +112,16 @@
                           <span style="font-size:15px">Hope-thetical Calculator</span>
                         </div>
                         <div class="col-xs-3">
-                          <select class="form-control" name="period2" [(ngModel)]="model.subscriptionFor[1].period" (change)="changePrice('Hope', model.subscriptionFor[1].period)">
+                          <select class="form-control" name="period2" [(ngModel)]="model.subDetail[1].itemPeriod" (change)="changePrice('Hope', model.subDetail[1].itemPeriod)">
                             <option value="0" selected></option>
-                            <option value="1 Month">1 Month</option>
-                            <option value="6 Months">6 Months</option>
-                            <option value="1 Year">1 Year</option>
+                            <option value="1">1 Month</option>
+                            <option value="6">6 Months</option>
+                            <option value="12">12 Months</option>
                           </select>
                         </div>
 
                         <div class="col-xs-1" style="text-align:right">
-                          <span style="font-size:15px">{{ model.subscriptionFor[1].amount | currency:'USD' : true : '1.2-2' }}</span>
+                          <span style="font-size:15px">{{ model.subDetail[1].itemAmount | currency:'USD' : true : '1.2-2' }}</span>
                         </div>
                       </div>
 
@@ -118,12 +132,12 @@
                           <span style="font-size:15px">Tax Effect Calculator</span>
                         </div>
                         <div class="col-xs-3">
-                          <input type="checkbox" [(ngModel)]="model.subscriptionFor[2].status" name="period3" (change)="changePrice('Tax', model.subscriptionFor[2].period)">
-                          <span style="font-size:15px">1 Year</span>
+                          <input type="checkbox" [(ngModel)]="model.subDetail[2].status" name="period3" (change)="changePrice('Tax', model.subDetail[2].itemPeriod)">
+                          <span style="font-size:15px">12 Months</span>
                         </div>
 
                         <div class="col-xs-1" style="text-align:right">
-                          <span style="font-size:15px">{{ model.subscriptionFor[2].amount | currency:'USD' : true : '1.2-2' }}</span>
+                          <span style="font-size:15px">{{ model.subDetail[2].itemAmount | currency:'USD' : true : '1.2-2' }}</span>
                         </div>
                       </div>
 
@@ -247,10 +261,10 @@
                                     </tr>
                                   </thead>
                                   <tbody>
-                                    <tr style="font-size: 15px" *ngFor="let item of model.subscriptionFor; let i = index">
-                                      <td *ngIf="item.status">{{ item.type }}</td>
-                                      <td *ngIf="item.status">{{ item.period }}</td>
-                                      <td *ngIf="item.status" style="text-align:right; width: 75px">{{ item.amount | currency:'USD' : true : '1.2-2' }}</td>
+                                    <tr style="font-size: 15px" *ngFor="let item of model.subDetail; let i = index">
+                                      <td *ngIf="item.status">{{ item.itemName }}</td>
+                                      <td *ngIf="item.status">{{ item.itemPeriod > 1 ? item.itemPeriod + ' Months' : item.itemPeriod + ' Month'}}</td>
+                                      <td *ngIf="item.status" style="text-align:right; width: 75px">{{ item.itemAmount | currency:'USD' : true : '1.2-2' }}</td>
                                     </tr>
                                   </tbody>
                                 </table>
@@ -406,7 +420,7 @@
                                 Next
                               </a> -->
 
-                              <a (click)="nextStep()" [class.disabled]="!nextBtnStatus" class="btn btn-lg txt-color-darken">
+                              <a (click)="nextStep()" [class.disabled]="steps.indexOf(activeStep) == 3 || !nextBtnStatus" class="btn btn-lg txt-color-darken">
                                 Next
                               </a>
                             </li>

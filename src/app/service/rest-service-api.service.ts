@@ -3,6 +3,7 @@ import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { SessionService } from './session.service';
 import 'rxjs/Rx';
+import { ObserveOnSubscriber } from 'rxjs/operator/observeOn';
 
 @Injectable()
 export class RestServiceApiService {
@@ -17,6 +18,9 @@ export class RestServiceApiService {
   private changePassword = this.apiLink + "oilwell/api/change_password";
   private activeUser = this.apiLink + "oilwell/admin/api/users/change_status";
   private changeUsername = this.apiLink + "oilwell/api/update_profile";
+  private list = this.apiLink + "oilwell/api/subscription";
+  private createSubscription = this.apiLink + "oilwell/api/subscription";
+  private mySubscription = this.apiLink + "oilwell/api/my/subscription";
 
   constructor(@Inject(Http) http: Http, private session: SessionService) {
     this.http = http;
@@ -138,6 +142,25 @@ export class RestServiceApiService {
     }, (error) => {
       return null
     });
+  }
+
+  // Get List
+  getSubscriptionList(): Observable<any> {
+    return this.genericGET(this.list);
+  }
+
+  // Create Subscription
+  createNewSubscription(details: any): Observable<any> {
+    return this.http.post(this.createSubscription, details, this.getOptionsWithToken()).map((response) => {
+      return response.json();
+    }, (error) => {
+      return null
+    });
+  }
+
+  // Get My Subscriptions
+  getMySubscriptions(): Observable<any> {
+    return this.genericGET(this.mySubscription);
   }
 
 }

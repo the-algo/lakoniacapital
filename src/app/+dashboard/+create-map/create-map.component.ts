@@ -6,6 +6,8 @@ import {
   animate, OnChanges, Input, DoCheck,
 } from '@angular/core';
 import { FadeInTop } from "../../shared/animations/fade-in-top.decorator";
+import { RestServiceApiService } from '../../service/rest-service-api.service';
+import { Router } from '@angular/router';
 
 @FadeInTop()
 @Component({
@@ -26,27 +28,28 @@ import { FadeInTop } from "../../shared/animations/fade-in-top.decorator";
 })
 export class CreateMapComponent implements OnInit {
 
-  ngOnInit() {
-  }
-
+  subscriptionList: any = [];
   public model = {
-    subscriptionFor: [
+    subDetail: [
       {
-        type: "Close-Ology Map",
-        period: '0',
-        amount: 0,
+        _id: '',
+        itemName: "Close-Ology Map",
+        itemPeriod: 0,
+        itemAmount: 0,
         status: false
       },
       {
-        type: "Hope-thetical Calculator",
-        period: '0',
-        amount: 0,
+        _id: '',
+        itemName: "Hope-thetical Calculator",
+        itemPeriod: 0,
+        itemAmount: 0,
         status: false
       },
       {
-        type: "Tax Effect Calculator",
-        period: '1 Year',
-        amount: 0,
+        _id: '',
+        itemName: "Tax Effect Calculator",
+        itemPeriod: 12,
+        itemAmount: 0,
         status: false
       }
     ],
@@ -62,6 +65,37 @@ export class CreateMapComponent implements OnInit {
       securityCode: ''
     }
   };
+
+  public finalDetails: any = {
+    subDetail: [],
+    subLocationName: '',
+    subLocationPostions: '',
+    paymentDetail: {}
+  };
+
+  err: boolean = false;
+  result: any;
+  erMsg: string = null;
+  errStatus: boolean = true;
+
+  constructor(private service: RestServiceApiService, private router: Router) {
+    this.service.getSubscriptionList().subscribe(res => {
+      if (!res.error) {
+        var details = res.result;
+        this.subscriptionList = details;
+
+        for (var i = 0; i < this.subscriptionList.length; i++) {
+          this.model.subDetail[i]._id = this.subscriptionList[i]._id;
+        }
+
+      }
+    })
+  }
+
+  ngOnInit() {
+  }
+
+
 
   status: boolean = false;
 
@@ -128,9 +162,8 @@ export class CreateMapComponent implements OnInit {
   }
 
   nextStep() {
-
     if (this.activeStep.key === "step1") {
-      if (this.model.subscriptionFor[0].status || this.model.subscriptionFor[1].status || this.model.subscriptionFor[2].status) {
+      if (this.model.subDetail[0].status || this.model.subDetail[1].status || this.model.subDetail[2].status) {
         this.activeStep.submitted = true;
         this.activeStep.checked = true;
         this.activeStep.valid = true;
@@ -169,56 +202,18 @@ export class CreateMapComponent implements OnInit {
         this.nextBtnStatus = false;
 
     } else if (this.activeStep.key === "step4") {
-      /* 
-            if (this.model.paymentDetails.cardType !== '0') {
-              this.cardStatus = true;
-      
-              if (this.model.paymentDetails.cardNo.length >= this.minLength && this.model.paymentDetails.cardNo.length <= this.minLength && (this.model.paymentDetails.cardNo !== null && this.model.paymentDetails.cardNo !== '')) {
-                this.cardNoStatus = true;
-      
-                if (this.model.paymentDetails.expirationDate !== null && this.model.paymentDetails.expirationDate !== '') {
-                  this.expirationDateStatus = true;
-      
-                  if (this.model.paymentDetails.cardHolderName !== null && this.model.paymentDetails.cardHolderName !== '') {
-                    this.cardholderNameStatus = true;
-      
-                    if (this.model.paymentDetails.securityCode !== null && this.model.paymentDetails.securityCode !== '') {
-                      this.securityCodeStatus = true;
-      
-                      console.log("Valid");
-      
-                    } else {
-                      this.securityCodeStatus = false;
-                      return;
-                    }
-                  } else {
-                    this.cardholderNameStatus = false;
-                    return;
-                  }
-                } else {
-                  this.expirationDateStatus = false;
-                  return;
-                }
-              } else {
-                this.cardNoStatus = false;
-                return;
-              }
-            } else {
-              this.cardStatus = false;
-              return;
-            } */
+      /*       this.activeStep.submitted = true;
+            this.activeStep.checked = true;
+            this.activeStep.valid = true; */
+      this.finalDetails.paymentDetail = this.model.paymentDetails;
 
-      this.activeStep.submitted = true;
-      this.activeStep.checked = true;
-      this.activeStep.valid = true;
-
-      console.log(this.model);
+      this.service.createNewSubscription(this.finalDetails).subscribe(res => {
+        console.log(res);
+      })
 
       return;
 
     }
-
-
 
 
 
@@ -273,42 +268,48 @@ export class CreateMapComponent implements OnInit {
 
     let per: number;
 
-    if (period === "0")
-      per = 0;
-    else if (period === "1 Month")
-      per = 1;
-    else if (period === "6 Months")
-      per = 6;
-    else if (period === "1 Year")
-      per = 12;
+    /*     if (period === "0")
+          per = 0;
+        else if (period === "1 Month")
+          per = 1;
+        else if (period === "6 Months")
+          per = 6;
+        else if (period === "1 Year")
+          per = 12; */
+
+    per = parseInt(period);
 
     if (type === "Map") {
 
-      this.model.subscriptionFor[0].amount = 2 * per;
+      this.model.subDetail[0].itemAmount = 2 * per;
+      this.model.subDetail[0].itemPeriod = per;
 
-      if (this.model.subscriptionFor[0].amount === 0)
-        this.model.subscriptionFor[0].status = false
+      if (this.model.subDetail[0].itemAmount === 0)
+        this.model.subDetail[0].status = false
       else
-        this.model.subscriptionFor[0].status = true
+        this.model.subDetail[0].status = true
     } else if (type === "Hope") {
-      this.model.subscriptionFor[1].amount = 1 * per;
+      this.model.subDetail[1].itemAmount = 1 * per;
+      this.model.subDetail[1].itemPeriod = per;
 
-      if (this.model.subscriptionFor[1].amount === 0)
-        this.model.subscriptionFor[1].status = false
+      if (this.model.subDetail[1].itemAmount === 0)
+        this.model.subDetail[1].status = false
       else
-        this.model.subscriptionFor[1].status = true
+        this.model.subDetail[1].status = true
     } else if (type === "Tax") {
-      if (this.model.subscriptionFor[2].status)
-        this.model.subscriptionFor[2].amount = 0.5;
+      if (this.model.subDetail[2].status)
+        this.model.subDetail[2].itemAmount = 0.5;
       else
-        this.model.subscriptionFor[2].amount = 0;
+        this.model.subDetail[2].itemAmount = 0;
 
     }
 
-    this.model.total = this.model.subscriptionFor[0].amount + this.model.subscriptionFor[1].amount + this.model.subscriptionFor[2].amount;
+    this.model.total = this.model.subDetail[0].itemAmount + this.model.subDetail[1].itemAmount + this.model.subDetail[2].itemAmount;
   }
 
   onClickSave() {
+    var subDetail = [];
+
     if (this.model.paymentDetails.cardType !== '0') {
       this.cardStatus = true;
     } else {
@@ -340,7 +341,6 @@ export class CreateMapComponent implements OnInit {
     }
 
     if (this.cardStatus && this.cardNoStatus && this.expirationDateStatus && this.cardholderNameStatus && this.securityCodeStatus) {
-      console.log("Valid");
       this.status = true;
       for (var i = 0; i < 1; i++) {
         if (this.steps[i].valid && this.steps[i + 1].valid) {
@@ -349,7 +349,39 @@ export class CreateMapComponent implements OnInit {
           this.nextBtnStatus = false
         }
       }
-      console.log(this.model);
+      this.activeStep.submitted = true;
+      this.activeStep.checked = true;
+      this.activeStep.valid = true;
+
+
+      for (var i = 0; i < this.model.subDetail.length; i++) {
+        if (this.model.subDetail[i].status) {
+          this.model.subDetail[i].itemAmount = this.model.subDetail[i].itemAmount / this.model.subDetail[i].itemPeriod;
+          subDetail.push(this.model.subDetail[i]);
+        }
+      }
+      this.finalDetails.subDetail = subDetail;
+      this.finalDetails.subLocationName = this.model.location;
+      this.finalDetails.subLocationPostions = this.model.latitude + ", " + this.model.longitude;
+      this.finalDetails.paymentDetail = this.model.paymentDetails;
+
+      this.service.createNewSubscription(this.finalDetails).subscribe(res => {
+        if (!res.error) {
+          this.result = res.result;
+          this.errStatus = res.error;
+
+          setTimeout(() => {
+            this.result = null;
+            if (!this.errStatus) {
+              this.errStatus = false;
+              this.router.navigate(['/dashboard/view-maps']);
+              return;
+            }
+            this.errStatus = true;
+
+          }, 2000);
+        }
+      })
     }
 
   }
