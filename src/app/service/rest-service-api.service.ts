@@ -10,7 +10,8 @@ export class RestServiceApiService {
 
   private http: Http = null;
 
-  private apiLink = "http://192.168.0.6:2158/";
+  private apiLink = "http://localhost:2158/";
+//  private apiLink = "http://192.168.0.6:2158/";
   private registerUser = this.apiLink + "oilwell/auth/users";
   private loginUser = this.apiLink + "oilwell/auth/login";
   private userList = this.apiLink + "oilwell/admin/api/users";
@@ -19,6 +20,7 @@ export class RestServiceApiService {
   private activeUser = this.apiLink + "oilwell/admin/api/users/change_status";
   private changeUsername = this.apiLink + "oilwell/api/update_profile";
   private list = this.apiLink + "oilwell/api/subscription";
+  private mySubscriptionUrl = this.apiLink + "oilwell/api/my/subscription";
   private createSubscription = this.apiLink + "oilwell/api/subscription";
   private mySubscription = this.apiLink + "oilwell/api/my/subscription";
 
@@ -109,6 +111,11 @@ export class RestServiceApiService {
   getUserList(): Observable<any> {
     return this.genericGET(this.userList);
   }
+
+  getMySubscriptionList(): Observable<any> {
+    return this.genericGET(this.mySubscriptionUrl);
+  }
+
 
   // Delete User
   deleteUserFromList(id: string): Observable<any> {
