@@ -14,7 +14,7 @@ import { RestServiceApiService } from '../../service/rest-service-api.service';
 @FadeInTop()
 @NgModule({
   imports: [ BrowserModule],
-  declarations: [ RenewSelectedMapComponent ],
+  declarations: [  ],
   bootstrap: [ RenewSelectedMapComponent ],
 })
 @Component({
