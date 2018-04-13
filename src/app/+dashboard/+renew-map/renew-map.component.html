@@ -9,7 +9,7 @@
         <table class="table">
           <thead>
             <tr style="font-size: medium; background: #3a3633; color: silver">
-              <th>Sr. No.</th>
+              <th>Map Id</th>
               <th>Location Name</th>
               <th>Subscription For</th>
               <th>Activation Date</th>
@@ -18,31 +18,17 @@
             </tr>
           </thead>
           <tbody>
-            <tr style="font-size: 15px" *ngFor="let item of detailsObject; let i = index">
-              <td>{{i+1}}</td>
+            <tr style="font-size: 15px" *ngFor="let item of uniqueSubscription; let i = index">
+              <td>{{item._id}}</td>
               <td>{{item.subLocationName}}</td>
+              <td>{{item.subItemName}}</td>    
+              <td>{{item.subActiveDate}}</td>
+              <td>{{item.subExpiryDate}}</td>
               <td>
-                <tr *ngFor="let data of item.subscription.for">
-                  <td>
-                    {{data}}
-                  </td>
-                </tr>
-              </td>
-              <td>
-                {{item.payment.dateOfPayment}}
-              </td>
-              <td>
-                <tr *ngFor="let data of item.subscription.expirationDate">
-                  <td>
-                    {{data}}
-                  </td>
-                </tr>
-              </td>
-              <td>
-                <button class="btn btn-info" (click)="onClickRenew(item.mapId)">
-                  Renew
-                  <i class="fa fa-sm fa-fw fa-refresh"></i>
-                </button>
+                  <button class="btn btn-info" (click)="onClickRenew(item)">
+                      Renew
+                      <i class="fa fa-sm fa-fw fa-refresh"></i>
+                    </button>
               </td>
             </tr>
           </tbody>
@@ -67,7 +53,7 @@
               <td>{{item.latitude}}</td>
               <td>{{item.longitude}}</td>
               <td>
-                <button class="btn btn-info" (click)="selectedMap = item">View Details</button>
+                <button class="btn btn-info" (click)="assign(item)">View Details</button>
               </td>
             </tr>
 
@@ -102,13 +88,13 @@
             <div class="col-xs-3">
               <div class="row">
                 <div class="col-xs-4 header-map">Map Id:</div>
-                <div class="col-xs-5 data-map">{{ selectedMap.mapId }}</div>
+                <div class="col-xs-5 data-map">{{ selectedMap._id }}</div>
               </div>
             </div>
             <div class="col-xs-7">
               <div class="row">
                 <div class="col-xs-3 header-map">Map Location:</div>
-                <div class="col-xs-9 data-map">{{ selectedMap.locationName }}</div>
+                <div class="col-xs-9 data-map">{{ selectedMap.subLocationName }}</div>
               </div>
             </div>
           </div>
@@ -117,7 +103,7 @@
             <div class="col-xs-12">
               <div class="row">
                 <div class="col-xs-1 header-map">Latitude:</div>
-                <div class="col-xs-5 data-map">{{ selectedMap.latitude }}</div>
+                <div class="col-xs-5 data-map">{{ selectedMap.lat }}</div>
               </div>
             </div>
           </div>
@@ -126,7 +112,7 @@
             <div class="col-xs-12">
               <div class="row">
                 <div class="col-xs-1 header-map">Longitude:</div>
-                <div class="col-xs-5 data-map">{{ selectedMap.longitude }}</div>
+                <div class="col-xs-5 data-map">{{ selectedMap.long }}</div>
               </div>
             </div>
           </div>
@@ -151,19 +137,19 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr style="font-size: 15px" *ngFor="let item of selectedMap.subscription.for; let i = index">
-                    <td>{{ selectedMap.subscription.for[i] }}</td>
-                    <td>{{ selectedMap.subscription.period[i] }}</td>
-                    <td>{{selectedMap.subscription.expirationDate[i]}}</td>
-                    <td>{{selectedMap.subscription.amount[i]}}</td>
-                  </tr>
+                  <tr style="font-size: 15px" *ngFor="let selectedobj of selectedSubscriptionList">
+                    <td>{{ selectedobj.subItemName }}</td>
+                    <td>{{ selectedobj.subPlanPeriod }}</td>
+                    <td>{{ selectedobj.subExpiryDate }}</td>
+                    <td>{{ selectedobj.subTotalAmount | currency:'USD' : true : '1.2-2' }}</td>
+                    </tr>
                 </tbody>
               </table>
             </div>
           </div>
         </div>
 
-        <div class="well">
+        <!-- <div class="well">
           <div class="row">
             <div class="col-xs-12 list-group-item active">
               <span class="map-header">Payment Details</span>
@@ -200,7 +186,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>

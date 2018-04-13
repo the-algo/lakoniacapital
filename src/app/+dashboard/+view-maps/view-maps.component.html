@@ -12,8 +12,8 @@
           </div>
           <div class="col-xs-3">
             <select class="form-control" [(ngModel)]="selectedUser" (change)="onUserSelected()">
-              <option *ngFor="let item of users" [ngValue]="item.key">
-                {{ item.value }}
+              <option *ngFor="let item of selectedUserDetails" [ngValue]="item._id">
+                {{ item._id }}
               </option>
             </select>
           </div>
@@ -108,8 +108,8 @@
           
             <div class="col-xs-7">
               <div class="row">
-                <div class="col-xs-3 header-map" style="margin:0px 0px 0px 30px">Map Location:</div>
-                <div class="col-xs-4 data-map"style="margin:0px 0px 0px -40px">{{ selectedMap.subLocationName }}</div>
+                <div class="col-xs-3 header-map" style="margin:0px 0px 0px 50px">Map Location:</div>
+                <div class="col-xs-4 data-map"style="margin:0px 0px 0px -30px">{{ selectedMap.subLocationName }}</div>
               </div>
             </div>
           </div>

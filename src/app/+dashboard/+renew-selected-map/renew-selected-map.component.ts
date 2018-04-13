@@ -3,12 +3,20 @@ import {
   state,
   style,
   transition,
-  animate, OnChanges, Input, DoCheck,
+  animate, OnChanges, Input, DoCheck,NgModule,
 } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+
 import { FadeInTop } from "../../shared/animations/fade-in-top.decorator";
 import { ActivatedRoute } from '@angular/router';
+import { RestServiceApiService } from '../../service/rest-service-api.service';
 
 @FadeInTop()
+@NgModule({
+  imports: [ BrowserModule],
+  declarations: [ RenewSelectedMapComponent ],
+  bootstrap: [ RenewSelectedMapComponent ],
+})
 @Component({
   selector: 'app-renew-selected-map',
   templateUrl: './renew-selected-map.component.html',
@@ -34,24 +42,31 @@ export class RenewSelectedMapComponent implements OnInit {
   selectedUser: number;
   data: boolean = false;
   selectedMapId: number = null;
+  object: any[]=[];
 
+
+  @Input() Data: string;
+  
 
   public model = {
     subscriptionFor: [
       {
         type: "Close-Ology Map",
+        expirationDate:'0',
         period: '0',
         amount: 0,
         status: false
       },
       {
         type: "Hope-thetical Calculator",
+        expirationDate:'0',
         period: '0',
         amount: 0,
         status: false
       },
       {
         type: "Tax Effect Calculator",
+        expirationDate:'0',
         period: '1 Year',
         amount: 0,
         status: false
@@ -69,8 +84,11 @@ export class RenewSelectedMapComponent implements OnInit {
       securityCode: ''
     }
   };
-
-  constructor(private route: ActivatedRoute) { }
+subscriptionitem:any;
+  constructor(private route: ActivatedRoute,private service: RestServiceApiService) { 
+    this.subscriptionitem=this.service.renewsubitem;
+    
+  }
 
   ngOnInit() {
 
@@ -170,14 +188,17 @@ export class RenewSelectedMapComponent implements OnInit {
         if (element == "Close-Ology Map") {
           this.model.subscriptionFor[0].period = this.detailsObject.subscription.period[index];
           this.model.subscriptionFor[0].amount = this.detailsObject.subscription.amount[index];
+          this.model.subscriptionFor[0].expirationDate = this.detailsObject.subscription.expirationDate[index];          
           this.model.subscriptionFor[0].status = true;
         } else if (element == "Hope-thetical Calculator") {
           this.model.subscriptionFor[1].period = this.detailsObject.subscription.period[index];
           this.model.subscriptionFor[1].amount = this.detailsObject.subscription.amount[index];
+          this.model.subscriptionFor[1].expirationDate = this.detailsObject.subscription.expirationDate[index];
           this.model.subscriptionFor[1].status = true;
         } else if (element == "Tax Effect Calculator") {
           this.model.subscriptionFor[2].period = this.detailsObject.subscription.period[index];
           this.model.subscriptionFor[2].amount = this.detailsObject.subscription.amount[index];
+          this.model.subscriptionFor[2].expirationDate = this.detailsObject.subscription.expirationDate[index];
           this.model.subscriptionFor[2].status = true;
         }
       });

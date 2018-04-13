@@ -41,7 +41,7 @@ export class ViewMapsComponent implements OnInit {
             item.subExpiryDate=new Date(item.subExpiryDate).toDateString()
         }
         for(let item1 of this.detailsObject){
-          if(!this.findUnique(item1.subLocationName)){
+          if(!this.findUnique(item1.lat)){
             this.uniqueSubscription.push(item1);
           }
       }
@@ -51,7 +51,7 @@ export class ViewMapsComponent implements OnInit {
   }
   findUnique(locationName){
     for(let item of this.uniqueSubscription){
-      if(item.subLocationName==locationName)
+      if(item.lat==locationName)
       return true;
     }
     return false;
@@ -63,7 +63,7 @@ export class ViewMapsComponent implements OnInit {
     this.selectedMap=item;
     this.selectedSubscriptionList=[];
     for(let obj of this.detailsObject){
-      if(obj.subLocationName==item.subLocationName){
+      if(obj.lat==item.lat){
         this.selectedSubscriptionList.push(obj);
       }
     }
@@ -72,10 +72,10 @@ export class ViewMapsComponent implements OnInit {
   onUserSelected() {
     this.selectedUserDetails = [];
 
-    this.detailsObject.forEach(element => {
-      if (element._id === this.selectedUser) {
+    this.detailsObject.forEach(element1 => {
+      var element=element._id;
         this.selectedUserDetails.push(element);
-      }
+      
     });
 
     this.data = true

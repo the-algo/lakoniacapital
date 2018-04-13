@@ -10,8 +10,10 @@ export class RestServiceApiService {
 
   private http: Http = null;
 
-  private apiLink = "http://localhost:2158/";
-//  private apiLink = "http://192.168.0.6:2158/";
+  renewsubitem:any;
+
+  //private apiLink = "http://localhost:2158/";
+  private apiLink = "http://107.170.218.205:2552/";
   private registerUser = this.apiLink + "oilwell/auth/users";
   private loginUser = this.apiLink + "oilwell/auth/login";
   private userList = this.apiLink + "oilwell/admin/api/users";
