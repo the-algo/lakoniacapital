@@ -192,3 +192,4 @@ App is configured for running end-to-end (via [Protractor](http://www.protractor
 [1] If you, on some edging cases, can't build or run angular 2 projects, consider to try any virtual environment (i.e custom vagrant with some lightweight linux and nodejs@6.*.*)
 #   l a k o n i a c a p  
  "# Dashboard" 
+"# Dashboard" 
