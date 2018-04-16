@@ -47,13 +47,14 @@ export const routes: Routes = [
     loadChildren: './+create-map/create-map.module#CreateMapModule',
   },
   {
-    path: 'renew-map/:id',
-    loadChildren: './+renew-selected-map/renew-selected-map.module#RenewSelectedMapModule',
-  },
-  {
     path: 'renew-map',
     loadChildren: './+renew-map/renew-map.module#RenewMapModule',
   },
+  {
+    path: 'renew-mapp',
+    loadChildren: './+renew-selected-map/renew-selected-map.module#RenewSelectedMapModule',
+  },
+  
   {
     path: 'update-details',
     loadChildren: './+edit-profile/edit-profile.module#EditProfileModule',

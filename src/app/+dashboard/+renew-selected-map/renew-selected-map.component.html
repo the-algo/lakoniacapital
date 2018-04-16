@@ -1,7 +1,7 @@
 <div id="content">
   <div>{{Data}}</div>
   <div class="row">
-    <sa-big-breadcrumbs [items]="['Dashboard', 'Create Map']" icon="home" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></sa-big-breadcrumbs>
+    <sa-big-breadcrumbs [items]="['Dashboard', 'Renew Map']" icon="home" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></sa-big-breadcrumbs>
   </div>
 
   <div class="row">
@@ -74,70 +74,33 @@
                       </div>
 
                       <br>
-
-                      <div class="row">
-                        <div class="col-xs-3">
-                          <section>
-                            <span style="font-size:15px">Close-Ology Map</span>
-                          </section>
+                      <div *ngFor="let item of renewid">
+                        <div class="row">
+                          <div class="col-xs-3">
+                            <section>
+                              <span style="font-size:15px">{{item.subItemName}}</span>
+                            </section>
+                          </div>
+                          <div class="col-xs-3">
+                            <span>{{item.subExpiryDate}}</span>
+                          </div>
+                          <div *ngIf="item.subItemName!=='Tax Effect Calculator'" class="col-xs-3">
+                            <select class="form-control" name="period1" [(ngModel)]="item.subPlanPeriod" (change)="changePrice('Map', item.subPlanPeriod)">
+                              <option value="0"></option>
+                              <option value="1">1 Month</option>
+                              <option value="6">6 Months</option>
+                              <option value="12">1 Year</option>
+                            </select>
+                          </div>
+                          <div class="col-xs-3" *ngIf="item.subItemName=='Tax Effect Calculator'">
+                            <input type="checkbox" [(ngModel)]="item.subPlanPeriod" name="period3" (change)="changePrice('Tax', item.subPlanPeriod)">
+                            <span style="font-size:15px">1 Year</span>
+                          </div>
+                          <div class="col-xs-1" style="text-align:right">
+                            <span style="font-size:15px">{{ item.subTotalAmount*item.subPlanPeriod | currency:'USD' : true : '1.2-2' }}</span>
+                          </div>
                         </div>
-                        <div class="col-xs-3">
-                          <span>{{ this.subscriptionitem.subExpiryDate}}</span>
-                        </div>
-                        <div class="col-xs-3">
-                          <select class="form-control" name="period1" [(ngModel)]="model.subscriptionFor[0].period" (change)="changePrice('Map', model.subscriptionFor[0].period)">
-                            <option value="0"></option>
-                            <option value="1 Month">1 Month</option>
-                            <option value="6 Months">6 Months</option>
-                            <option value="1 Year">1 Year</option>
-                          </select>
-                        </div>
-
-                        <div class="col-xs-1" style="text-align:right">
-                          <span style="font-size:15px">{{ model.subscriptionFor[0].amount | currency:'USD' : true : '1.2-2' }}</span>
-                        </div>
-                      </div>
-
-                      <br>
-
-                      <div class="row">
-                        <div class="col-xs-3">
-                          <span style="font-size:15px">Hope-thetical Calculator</span>
-                        </div>
-                        <div class="col-xs-3">
-                          <span>{{model.subscriptionFor[1].expirationDate}}</span>
-                        </div>
-                        <div class="col-xs-3">
-                          <select class="form-control" name="period2" [(ngModel)]="model.subscriptionFor[1].period" (change)="changePrice('Hope', model.subscriptionFor[1].period)">
-                            <option value="0"></option>
-                            <option value="1 Month">1 Month</option>
-                            <option value="6 Months">6 Months</option>
-                            <option value="1 Year">1 Year</option>
-                          </select>
-                        </div>
-
-                        <div class="col-xs-1" style="text-align:right">
-                          <span style="font-size:15px">{{ model.subscriptionFor[1].amount | currency:'USD' : true : '1.2-2' }}</span>
-                        </div>
-                      </div>
-
-                      <br>
-
-                      <div class="row">
-                        <div class="col-xs-3">
-                          <span style="font-size:15px">Tax Effect Calculator</span>
-                        </div>
-                        <div class="col-xs-3">
-                          <span>{{model.subscriptionFor[2].expirationDate}}</span>
-                        </div>
-                        <div class="col-xs-3">
-                          <input type="checkbox" [(ngModel)]="model.subscriptionFor[2].status" name="period3" (change)="changePrice('Tax', model.subscriptionFor[2].period)">
-                          <span style="font-size:15px">1 Year</span>
-                        </div>
-
-                        <div class="col-xs-1" style="text-align:right">
-                          <span style="font-size:15px">{{ model.subscriptionFor[2].amount | currency:'USD' : true : '1.2-2' }}</span>
-                        </div>
+                        <br>
                       </div>
 
                       <div class="row">

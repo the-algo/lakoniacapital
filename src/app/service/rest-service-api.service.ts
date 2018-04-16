@@ -11,6 +11,7 @@ export class RestServiceApiService {
   private http: Http = null;
 
   renewsubitem:any;
+  renewid:any;
 
   //private apiLink = "http://localhost:2158/";
   private apiLink = "http://107.170.218.205:2552/";

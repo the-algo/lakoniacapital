@@ -1,9 +1,4 @@
-import {
-  Component, OnInit, trigger,
-  state,
-  style,
-  transition,
-  animate, OnChanges, Input, DoCheck,NgModule,
+import { Component, OnInit, trigger, state, style, transition, animate, OnChanges, Input, DoCheck,NgModule,
 } from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
@@ -85,16 +80,15 @@ export class RenewSelectedMapComponent implements OnInit {
     }
   };
 subscriptionitem:any;
+renewid:any[]=[];
   constructor(private route: ActivatedRoute,private service: RestServiceApiService) { 
-    this.subscriptionitem=this.service.renewsubitem;
+   // this.subscriptionitem=this.service.renewsubitem;
+    this.renewid=this.service.renewid;
+    console.log(this.renewid);
     
   }
 
   ngOnInit() {
-
-    this.route.params.subscribe(param => {
-      this.selectedMapId = param["id"];
-    })
 
     var obj = [
       {
@@ -165,13 +159,13 @@ subscriptionitem:any;
     ]
 
 
-    obj.forEach(element => {
-      if (element.mapId == this.selectedMapId) {
-        this.detailsObject = element;
-      }
-    });
+    // obj.forEach(element => {
+    //   if (element.mapId == this.selectedMapId) {
+    //     this.detailsObject = element;
+    //   }
+    // });
 
-    console.log(this.detailsObject);
+    //console.log(this.detailsObject);
 
     if (this.detailsObject) {
       this.model.total = this.detailsObject.payment.totalAmount;

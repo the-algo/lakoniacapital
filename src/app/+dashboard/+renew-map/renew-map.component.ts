@@ -3,6 +3,7 @@ import { FadeInTop } from "../../shared/animations/fade-in-top.decorator";
 import { RestServiceApiService } from '../../service/rest-service-api.service';
 import { Router } from '@angular/router';
 import {BrowserModule} from '@angular/platform-browser';
+import { element } from 'protractor';
 
 @FadeInTop()
 @Component({
@@ -13,6 +14,7 @@ export class RenewMapComponent implements OnInit {
 
   detailsObject: any[] = [];
   selectedUserDetails: any[] = [];
+  renewid: any[]=[];
   selectedMap: any;
   selectedSubscriptionList:any[]=[]
   selectedUser: any;
@@ -35,7 +37,7 @@ export class RenewMapComponent implements OnInit {
       this.id = data.userRoleId;
       this.service.getMySubscriptions().subscribe(res => {
         this.detailsObject = res.result;
-        console.log(res);
+       // console.log(res);
         for (let item of this.detailsObject) {
           var latLongArray = item.subLocationPostions.split(',')
           item.lat = latLongArray[0]
@@ -152,9 +154,18 @@ export class RenewMapComponent implements OnInit {
       this.data = true
     }
     onClickRenew(item) {
+      this.renewid=[];
+      this.service.renewid=[];
+      this.detailsObject.forEach(element1 =>{
+        if(element1.lat===item.lat){
+         // this.renewid.push(element1._id);
+          this.service.renewid.push(element1);
+        }
+      });
 
-       this.service.renewsubitem=item;
-      this.router.navigate(['/dashboard/renew-map', item._id])
+
+      //  this.service.renewsubitem=item;
+      this.router.navigate(['/dashboard/renew-mapp'])
   
     }
   
